@@ -1,0 +1,3 @@
+Content\Imagenes\barra1.xnb
+Content\Imagenes\barra2.xnb
+Content\Imagenes\pelota.xnb
