@@ -25,3 +25,12 @@ C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projec
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\SJTPong\SJTPong\SJTPong\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\SJTPong\SJTPong\SJTPong\obj\x86\Debug\SJTPong.exe
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\SJTPong\SJTPong\SJTPong\obj\x86\Debug\SJTPong.pdb
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\bin\x86\Debug\Content\Imagenes\barra1.xnb
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\bin\x86\Debug\Content\Imagenes\barra2.xnb
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\bin\x86\Debug\Content\Imagenes\pelota.xnb
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\bin\x86\Debug\SJTPong.exe
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\bin\x86\Debug\SJTPong.pdb
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\obj\x86\Debug\SJTPong.exe
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPong\obj\x86\Debug\SJTPong.pdb

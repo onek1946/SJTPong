@@ -1,3 +1,4 @@
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\WindowsGame1\WindowsGame1\WindowsGame1Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\SJTPong\WindowsGame1\WindowsGame1Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\SJTPong\SJTPong\SJTPongContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Nico\Desktop\Pong\SJTPong\SJTPongContent\obj\x86\Debug\ResolveAssemblyReference.cache

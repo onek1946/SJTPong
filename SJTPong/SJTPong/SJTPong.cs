@@ -22,9 +22,14 @@ namespace SJTPongGame
         Barra _player2 = new Barra(780,300);
         Pelota _pelota = new Pelota(400,300);
         TimeSpan _timeballmove;
-
+        Boolean _stat1 = new Boolean();
+        Boolean _stat2 = new Boolean();
+        String _direccionball;
         public SJTPong()
         {
+            _stat1 = false;
+            _stat2 = false;
+            _direccionball = "Right"; 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 600;
@@ -81,31 +86,71 @@ namespace SJTPongGame
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            //Movimiento teclado
+            //Movimiento teclado 1
             KeyboardState ks = Keyboard.GetState();
 
-            if (ks.IsKeyDown(Keys.Down) && _player1.Pos.Y<=500 )
+            if (ks.IsKeyDown(Keys.Down) && _player2.Pos.Y<=500 && _stat2 == false)
+                _player2.Pos.Y += 5;
+
+            if (ks.IsKeyDown(Keys.Up) && _player2.Pos.Y >= 0 && _stat2 == false)
+                _player2.Pos.Y -= 5;
+
+            //Movimiento teclado 2
+            if (ks.IsKeyDown(Keys.S) && _player1.Pos.Y <= 500 && _stat1 == false)
                 _player1.Pos.Y += 5;
 
-            if (ks.IsKeyDown(Keys.Up) && _player1.Pos.Y >= 0 )
+            if (ks.IsKeyDown(Keys.W) && _player1.Pos.Y >= 0 && _stat1 == false)
                 _player1.Pos.Y -= 5;
 
+            //Activa IA de Player 1
+            if (ks.IsKeyDown(Keys.F1))
+            {
+                if (_stat1 == false)
+                {
+                    _stat1 = true;
+                }
+                else
+                {
+                    _stat1 = false;
+                }
+            }
+
+            //Activa IA de Player 2
+            if (ks.IsKeyDown(Keys.F2))
+            {
+                if (_stat2 == false)
+                {
+                    _stat2 = true;
+                }
+                else
+                {
+                    _stat2 = false;
+                }
+            }
             //Detectar colision de pelota con barra
             Boolean condition_bc_y_p1 = _pelota.Pos.Y + _pelota.Size.Y >= _player1.Pos.Y && _pelota.Pos.Y <= _player1.Pos.Y + _player1.Size.Y;
             Boolean condition_bc_y_p2 = _pelota.Pos.Y + _pelota.Size.Y >= _player2.Pos.Y && _pelota.Pos.Y <= _player2.Pos.Y + _player2.Size.Y;
             Boolean condition_bc_x_p1 = _pelota.Pos.X <= (10 + _player1.Size.X) ;
             Boolean condition_bc_x_p2 = _pelota.Pos.X + _pelota.Size.X >= 790 - _player2.Size.X; 
-            if ((condition_bc_x_p2&&condition_bc_y_p2)||(condition_bc_y_p1 && condition_bc_x_p1))
+            if ((condition_bc_x_p2&&condition_bc_y_p2&&_direccionball=="Right"))
             {
-                 _pelota.Velocity.X *= -1;           
+                _pelota.Velocity.X *= -1;
+                //Fix bug direccion ball sobre barra
+                _direccionball = "Left";
             }
-            else
+            else if (condition_bc_y_p1 && condition_bc_x_p1 && _direccionball == "Left")
             {
+                _pelota.Velocity.X *= -1;
+                //Fix bug direccion ball sobre barra
+                _direccionball = "Right";
+            }
+            else {
                 //Detectar fin de camino y poner en el medio
                 if (_pelota.Pos.X < (10 + _player1.Size.X))
                 {
                     _pelota.Pos.X = 400;
                     _pelota.Pos.Y = 300;
+                    _direccionball = "Left";
                     //Punto para el lado izquierdo
                 }
 
@@ -113,6 +158,7 @@ namespace SJTPongGame
                 {
                     _pelota.Pos.X = 400;
                     _pelota.Pos.Y = 300;
+                    _direccionball = "Right";
                     //Punto para el lado derecho
                 }
             }
@@ -130,19 +176,36 @@ namespace SJTPongGame
             }
         
             
-            //mover juegador2
+            //IA Player 2
             //Aca practicamente estoy haciendo la AI de la PC
             //Me fijo el centro de la pelota e intento ir hacia alla.
-            UInt32 next_move = (UInt32)_pelota.Pos.Y + (UInt32)(_pelota.Size.Y/2 ) ;
+            if (_stat2 == true)
+            {
+                UInt32 next_move = (UInt32)_pelota.Pos.Y + (UInt32)(_pelota.Size.Y / 2);
 
-            if (_pelota.Velocity.X > 0 && next_move > ((UInt32)_player2.Pos.Y + (UInt32)(_player2.Size.Y / 2)) && _player2.Pos.Y < 500)
-                _player2.Pos.Y += 5;
+                if (_pelota.Velocity.X > 0 && next_move > ((UInt32)_player2.Pos.Y + (UInt32)(_player2.Size.Y / 2)) && _player2.Pos.Y < 500)
+                    _player2.Pos.Y += 5;
 
-            if (_pelota.Velocity.X > 0 && next_move < ((UInt32)_player2.Pos.Y + (UInt32)(_player2.Size.Y / 2)) && _player2.Pos.Y >= 5)
-                _player2.Pos.Y -= 5;
+                if (_pelota.Velocity.X > 0 && next_move < ((UInt32)_player2.Pos.Y + (UInt32)(_player2.Size.Y / 2)) && _player2.Pos.Y >= 5)
+                    _player2.Pos.Y -= 5;
 
-            base.Update(gameTime);
-        }
+                base.Update(gameTime);
+            }
+
+            //IA Player 1
+            if (_stat1 == true)
+            {
+                UInt32 next_move = (UInt32)_pelota.Pos.Y + (UInt32)(_pelota.Size.Y / 2);
+
+                if (_pelota.Velocity.X < 0 && next_move > ((UInt32)_player1.Pos.Y + (UInt32)(_player1.Size.Y / 2)) && _player1.Pos.Y < 500)
+                    _player1.Pos.Y += 5;
+
+                if (_pelota.Velocity.X < 0 && next_move < ((UInt32)_player1.Pos.Y + (UInt32)(_player1.Size.Y / 2)) && _player1.Pos.Y >= 5)
+                    _player1.Pos.Y -= 5;
+
+                base.Update(gameTime);
+            }
+        } 
 
         /// <summary>
         /// This is called when the game should draw itself.
