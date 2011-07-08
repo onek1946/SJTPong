@@ -58,6 +58,11 @@ namespace SJTPongGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _player1.Load_texture(Content.Load<Texture2D>("Imagenes/barra1"));
             _pelota.Load_texture(Content.Load<Texture2D>("Imagenes/pelota"));
+
+
+            _player1.puntaje.Configurar_fuente(Content.Load<SpriteFont>("Fuentes/Kootenay1"),300,10);
+            _player2.puntaje.Configurar_fuente(Content.Load<SpriteFont>("Fuentes/Kootenay1"),450,10);
+
             _player2.Load_texture(Content.Load<Texture2D>("Imagenes/barra2"));
         }
 
@@ -160,16 +165,20 @@ namespace SJTPongGame
                 {
                     _pelota.Pos.X = 400;
                     _pelota.Pos.Y = 300;
-                    _pelota.direccionball = "Left";
-                    //Punto para el lado izquierdo
+                    _pelota.direccionball = "Right";
+                    _pelota.Velocity.X *= -1;
+                    //Punto para el lado derecho
+                    _player2.puntaje.Incrementar_puntaje();
                 }
 
                 if (_pelota.Pos.X > 790 - _player2.Size.X)
                 {
                     _pelota.Pos.X = 400;
                     _pelota.Pos.Y = 300;
-                    _pelota.direccionball = "Right";
-                    //Punto para el lado derecho
+                    _pelota.direccionball = "Left";
+                    _pelota.Velocity.X *= -1;
+                    //Punto para el lado izquierdo
+                    _player1.puntaje.Incrementar_puntaje();
                 }
             }
             //Colision de pelota con bordes
@@ -227,6 +236,8 @@ namespace SJTPongGame
             spriteBatch.Begin();
             
             spriteBatch.Draw(_player1.Textura,_player1.Pos , Color.White);
+            spriteBatch.DrawString(_player1.puntaje.Fuente,"Jugador 1: "+_player1.puntaje.Mostrar_puntaje(), _player1.puntaje.Pos, Color.White);
+            spriteBatch.DrawString(_player2.puntaje.Fuente,"Jugador 2: "+ _player2.puntaje.Mostrar_puntaje(), _player2.puntaje.Pos, Color.White);
             spriteBatch.Draw(_player2.Textura, _player2.Pos, Color.White);
             spriteBatch.Draw(_pelota.Textura, _pelota.Pos, Color.White);
             spriteBatch.End();
@@ -242,12 +253,14 @@ namespace SJTPongGame
         //Por ahora el tamaño lo pongo hardcodeado
         public Vector2 Size = new Vector2(10, 100);
         public Boolean AI_player;
+        public Puntaje puntaje;
         public Boolean Config_player_pressed;
-        public Barra(UInt32 A,UInt32 B) 
+        public Barra(UInt32 A,UInt32 B,Boolean ai_player = false) 
         {
             Pos.X = A; Pos.Y = B;
-            AI_player = false; //Esto significa que ambos jugadores serán humanos
+            AI_player = ai_player; //Esto significa que ambos jugadores serán humanos inicialmente
             Config_player_pressed = false;//Para eliminar el efecto rebote y no bloquear el programa
+            puntaje = new Puntaje();
         }
         public UInt32 Load_texture(Texture2D textura)
         {
@@ -273,6 +286,33 @@ namespace SJTPongGame
         {
             Textura=textura;   
             return 0;
+        }
+    }
+    public class Puntaje
+    {
+        
+        UInt32 Cantidad;
+        public SpriteFont Fuente;
+        public Vector2 Pos = new Vector2(0,0);
+        public Puntaje ()
+        {
+            Cantidad = 0;
+        }
+
+        public void Configurar_fuente(SpriteFont fuente,UInt32 posx,UInt32 posy)
+        {
+            Fuente = fuente; 
+            Pos.X = posx; Pos.Y = posy;
+        }
+
+        public void Incrementar_puntaje(UInt32 cantidad = 1)
+        {
+            Cantidad += cantidad;
+        }
+
+        public String Mostrar_puntaje()
+        { 
+        return Convert.ToString(Cantidad);
         }
     }
 
